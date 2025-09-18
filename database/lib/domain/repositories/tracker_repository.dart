@@ -7,7 +7,7 @@ import 'package:database/domain/entities/enums.dart';
 
 abstract class TrackerRepository {
   // CRUD Shows
-  Future<List<Show>> searchShows({String? query, String? genre, ShowType? type});
+  Future<List<Show>> searchShows({String? query, String? genre, ShowType? type, ShowStatus? status});
   Future<Show?> getShow(int id);
   Future<void> upsertShow(Show show);
   Future<void> deleteShow(int id);

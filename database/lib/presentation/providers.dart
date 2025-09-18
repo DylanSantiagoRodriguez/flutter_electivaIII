@@ -33,20 +33,21 @@ final themeModeProvider = Provider<ThemeMode>((ref) {
 });
 
 // Shows list with filters
-class ShowsFilter extends StateNotifier<({String query, String? genre, ShowType? type})> {
-  ShowsFilter() : super((query: '', genre: null, type: null));
+class ShowsFilter extends StateNotifier<({String query, String? genre, ShowType? type, ShowStatus? status})> {
+  ShowsFilter() : super((query: '', genre: null, type: null, status: null));
 
-  void setQuery(String q) => state = (query: q, genre: state.genre, type: state.type);
-  void setGenre(String? g) => state = (query: state.query, genre: g, type: state.type);
-  void setType(ShowType? t) => state = (query: state.query, genre: state.genre, type: t);
+  void setQuery(String q) => state = (query: q, genre: state.genre, type: state.type, status: state.status);
+  void setGenre(String? g) => state = (query: state.query, genre: g, type: state.type, status: state.status);
+  void setType(ShowType? t) => state = (query: state.query, genre: state.genre, type: t, status: state.status);
+  void setStatus(ShowStatus? s) => state = (query: state.query, genre: state.genre, type: state.type, status: s);
 }
 
-final showsFilterProvider = StateNotifierProvider<ShowsFilter, ({String query, String? genre, ShowType? type})>((ref) => ShowsFilter());
+final showsFilterProvider = StateNotifierProvider<ShowsFilter, ({String query, String? genre, ShowType? type, ShowStatus? status})>((ref) => ShowsFilter());
 
 final showsListProvider = FutureProvider<List<Show>>((ref) async {
   final repo = ref.read(repositoryProvider);
   final f = ref.watch(showsFilterProvider);
-  return repo.searchShows(query: f.query, genre: f.genre, type: f.type);
+  return repo.searchShows(query: f.query, genre: f.genre, type: f.type, status: f.status);
 });
 
 // Current watching

@@ -1,5 +1,4 @@
 import 'package:database/presentation/pages/home_page.dart';
-import 'package:database/presentation/pages/now_playing_page.dart';
 import 'package:database/presentation/pages/stats_page.dart';
 import 'package:database/presentation/providers.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class _HomeShell extends StatefulWidget {
 class _HomeShellState extends State<_HomeShell> {
   int _index = 0;
 
-  final _pages = const [HomePage(), NowPlayingPage(), StatsPage()];
+  final _pages = const [HomePage(), StatsPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,6 @@ class _HomeShellState extends State<_HomeShell> {
         selectedIndex: _index,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Inicio'),
-          NavigationDestination(icon: Icon(Icons.play_circle), label: 'Progreso'),
           NavigationDestination(icon: Icon(Icons.bar_chart), label: 'Stats'),
         ],
         onDestinationSelected: (i) => setState(() => _index = i),

@@ -47,6 +47,18 @@ class HomePage extends ConsumerWidget {
                 ],
                 onChanged: (v) => ref.read(showsFilterProvider.notifier).setType(v),
               ),
+              const SizedBox(width: 8),
+              DropdownButton<ShowStatus?>(
+                value: filter.status,
+                hint: const Text('Estado'),
+                items: const [
+                  DropdownMenuItem(value: null, child: Text('Todos')),
+                  DropdownMenuItem(value: ShowStatus.toWatch, child: Text('Por ver')),
+                  DropdownMenuItem(value: ShowStatus.inProgress, child: Text('En progreso')),
+                  DropdownMenuItem(value: ShowStatus.watched, child: Text('Vistas')),
+                ],
+                onChanged: (v) => ref.read(showsFilterProvider.notifier).setStatus(v),
+              ),
             ]),
           ),
           Expanded(
@@ -68,7 +80,7 @@ class HomePage extends ConsumerWidget {
         onPressed: () async {
           final saved = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddShowPage()));
           if (saved == true) {
-            ref.refresh(showsListProvider);
+            final _ = ref.refresh(showsListProvider);
           }
         },
         icon: const Icon(Icons.add),

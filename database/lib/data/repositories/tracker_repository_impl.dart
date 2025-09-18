@@ -64,7 +64,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
   }
 
   @override
-  Future<List<Show>> searchShows({String? query, String? genre, ShowType? type}) async {
+  Future<List<Show>> searchShows({String? query, String? genre, ShowType? type, ShowStatus? status}) async {
     final db = await sqlite.database;
     final where = <String>[];
     final args = <Object?>[];
@@ -79,6 +79,10 @@ class TrackerRepositoryImpl implements TrackerRepository {
     if (type != null) {
       where.add('type = ?');
       args.add(type.name);
+    }
+    if (status != null) {
+      where.add('status = ?');
+      args.add(status.name);
     }
     final rows = await db.query('shows', where: where.isEmpty ? null : where.join(' AND '), whereArgs: args, orderBy: 'title ASC');
     return rows.map((m) => Show.fromJson(_decodeShow(m))).toList();
